@@ -1,27 +1,23 @@
-package cool.happycoding.uaa.dto.form;
+package cool.happycoding.uaa.user.dto.form;
 
 import cool.happycoding.code.mybatis.base.BaseForm;
-import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
  * <p>
- * 用户 更新
+ * 用户 新增
  * </p>
  *
  * @author happycoding
  * @since 2021-06-10
  */
 @Data
-@ApiModel(value="UserUpdateForm对象", description="用户更新")
-public class UserUpdateForm extends BaseForm {
+@ApiModel(value="UserAddForm对象", description="用户新增")
+public class UserAddForm extends BaseForm {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "主键")
-    private String id;
 
     @ApiModelProperty(value = "用户账号")
     private String account;

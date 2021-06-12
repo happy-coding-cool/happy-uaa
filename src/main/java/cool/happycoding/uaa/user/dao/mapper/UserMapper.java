@@ -1,9 +1,9 @@
-package cool.happycoding.uaa.dao.mapper;
+package cool.happycoding.uaa.user.dao.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import cool.happycoding.uaa.dao.entity.User;
+import cool.happycoding.uaa.user.dao.entity.User;
 
 /**
  * <p>

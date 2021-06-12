@@ -1,7 +1,6 @@
-package cool.happycoding.uaa.dao.entity;
+package cool.happycoding.uaa.user.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableField;
 import cool.happycoding.code.mybatis.base.BaseEntity;
 import lombok.Data;

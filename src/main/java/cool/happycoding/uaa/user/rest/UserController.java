@@ -1,13 +1,13 @@
-package cool.happycoding.uaa.rest;
+package cool.happycoding.uaa.user.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import cool.happycoding.uaa.dto.form.UserAddForm;
-import cool.happycoding.uaa.dto.form.UserQryForm;
-import cool.happycoding.uaa.dto.form.UserQryPageForm;
-import cool.happycoding.uaa.dto.form.UserUpdateForm;
-import cool.happycoding.uaa.dto.UserDto;
-import cool.happycoding.uaa.service.IUserService;
+import cool.happycoding.uaa.user.dto.form.UserAddForm;
+import cool.happycoding.uaa.user.dto.form.UserQryForm;
+import cool.happycoding.uaa.user.dto.form.UserQryPageForm;
+import cool.happycoding.uaa.user.dto.form.UserUpdateForm;
+import cool.happycoding.uaa.user.dto.UserDto;
+import cool.happycoding.uaa.user.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

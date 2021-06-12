@@ -1,12 +1,12 @@
-package cool.happycoding.uaa.service;
+package cool.happycoding.uaa.user.service;
 
-import cool.happycoding.uaa.dao.entity.User;
+import cool.happycoding.uaa.user.dao.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import cool.happycoding.uaa.dto.form.UserAddForm;
-import cool.happycoding.uaa.dto.form.UserQryForm;
-import cool.happycoding.uaa.dto.form.UserQryPageForm;
-import cool.happycoding.uaa.dto.form.UserUpdateForm;
-import cool.happycoding.uaa.dto.UserDto;
+import cool.happycoding.uaa.user.dto.form.UserAddForm;
+import cool.happycoding.uaa.user.dto.form.UserQryForm;
+import cool.happycoding.uaa.user.dto.form.UserQryPageForm;
+import cool.happycoding.uaa.user.dto.form.UserUpdateForm;
+import cool.happycoding.uaa.user.dto.UserDto;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.List;
 

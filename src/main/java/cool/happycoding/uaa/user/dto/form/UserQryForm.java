@@ -1,7 +1,6 @@
-package cool.happycoding.uaa.dto.form;
+package cool.happycoding.uaa.user.dto.form;
 
 import cool.happycoding.code.mybatis.base.BaseForm;
-import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

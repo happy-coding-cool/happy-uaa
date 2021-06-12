@@ -1,15 +1,15 @@
-package cool.happycoding.uaa.service.impl;
+package cool.happycoding.uaa.user.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import cool.happycoding.uaa.dao.entity.User;
-import cool.happycoding.uaa.dao.mapper.UserMapper;
-import cool.happycoding.uaa.service.IUserService;
+import cool.happycoding.uaa.user.dao.entity.User;
+import cool.happycoding.uaa.user.dao.mapper.UserMapper;
+import cool.happycoding.uaa.user.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cool.happycoding.uaa.dto.form.UserAddForm;
-import cool.happycoding.uaa.dto.form.UserQryForm;
-import cool.happycoding.uaa.dto.form.UserQryPageForm;
-import cool.happycoding.uaa.dto.form.UserUpdateForm;
-import cool.happycoding.uaa.dto.UserDto;
+import cool.happycoding.uaa.user.dto.form.UserAddForm;
+import cool.happycoding.uaa.user.dto.form.UserQryForm;
+import cool.happycoding.uaa.user.dto.form.UserQryPageForm;
+import cool.happycoding.uaa.user.dto.form.UserUpdateForm;
+import cool.happycoding.uaa.user.dto.UserDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.metadata.IPage;
