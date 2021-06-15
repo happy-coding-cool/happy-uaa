@@ -33,7 +33,6 @@ public class HappyClientDetails implements ClientDetails {
     public HappyClientDetails(){}
 
     public HappyClientDetails(OauthClientDetails prototype) {
-
         this();
         setAccessTokenValiditySeconds(prototype.getAccessTokenValidity());
         setRefreshTokenValiditySeconds(prototype
@@ -65,6 +64,11 @@ public class HappyClientDetails implements ClientDetails {
                 this.resourceIds = resources;
             }
         }
+    }
+
+    public static OauthClientDetails of(ClientDetails clientDetails){
+
+        return new OauthClientDetails();
     }
 
     @Override

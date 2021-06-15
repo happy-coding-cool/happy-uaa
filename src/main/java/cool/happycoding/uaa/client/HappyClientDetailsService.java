@@ -22,8 +22,7 @@ public class HappyClientDetailsService implements ClientDetailsService, ClientRe
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-
-        return null;
+        return oauthClientDetailsService.loadClientByClientId(clientId);
     }
 
     @Override
