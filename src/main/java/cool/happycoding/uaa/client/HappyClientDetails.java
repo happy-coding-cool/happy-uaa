@@ -1,6 +1,9 @@
 package cool.happycoding.uaa.client;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
 import cool.happycoding.uaa.client.dao.entity.OauthClientDetails;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +12,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * description
@@ -43,7 +47,7 @@ public class HappyClientDetails implements ClientDetails {
             this.authorizedGrantTypes = StringUtils.commaDelimitedListToSet(prototype.getAuthorizedGrantTypes());
         }
         if (StrUtil.isNotBlank(prototype.getScope())){
-            this.autoApproveScopes = StringUtils.commaDelimitedListToSet(prototype.getAuthorizedGrantTypes());
+            this.autoApproveScopes = StringUtils.commaDelimitedListToSet(prototype.getScope());
         }
         if (StrUtil.isNotBlank(prototype.getAuthorities())) {
             this.authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(prototype.getAuthorities());
@@ -57,6 +61,11 @@ public class HappyClientDetails implements ClientDetails {
                 this.scope = scopeList;
             }
         }
+        if (StrUtil.isNotBlank(prototype.getAdditionalInformation())){
+            @SuppressWarnings("unchecked")
+            Map<String, Object> map = JSONObject.parseObject(prototype.getAdditionalInformation(), Map.class);
+            additionalInformation.putAll(map);
+        }
         if (StrUtil.isNotBlank(prototype.getResourceIds())) {
             Set<String> resources = StringUtils
                     .commaDelimitedListToSet(prototype.getResourceIds());
@@ -67,8 +76,25 @@ public class HappyClientDetails implements ClientDetails {
     }
 
     public static OauthClientDetails of(ClientDetails clientDetails){
-
-        return new OauthClientDetails();
+        // 类型转换
+        return new OauthClientDetails(clientDetails.getClientId(),
+                clientDetails.getClientSecret(),
+                CollUtil.isNotEmpty(clientDetails.getResourceIds())
+                        ? String.join(",", clientDetails.getResourceIds()) : null,
+                CollUtil.isNotEmpty(clientDetails.getScope())
+                        ? String.join(",", clientDetails.getScope()) : null,
+                CollUtil.isNotEmpty(clientDetails.getAuthorizedGrantTypes())
+                        ? String.join(",", clientDetails.getAuthorizedGrantTypes()) : null,
+                CollUtil.isNotEmpty(clientDetails.getRegisteredRedirectUri())
+                        ? String.join(",", clientDetails.getRegisteredRedirectUri()) : null,
+                CollUtil.isNotEmpty(clientDetails.getAuthorities())
+                        ? clientDetails.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")) : null,
+                clientDetails.getAccessTokenValiditySeconds(),
+                clientDetails.getRefreshTokenValiditySeconds(),
+                CollUtil.isNotEmpty(clientDetails.getAdditionalInformation()) ? JSONObject.toJSONString(clientDetails.getAdditionalInformation()):null,
+                null
+                );
     }
 
     @Override

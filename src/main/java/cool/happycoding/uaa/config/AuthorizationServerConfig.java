@@ -1,5 +1,7 @@
 package cool.happycoding.uaa.config;
 
+import cool.happycoding.uaa.client.HappyClientDetailsService;
+import cool.happycoding.uaa.client.service.IOauthClientDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
@@ -27,9 +29,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * 注入authenticationManager 来支持 password grant type
      */
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
     private final TokenStore tokenStore;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final IOauthClientDetailsService oauthClientDetailsService;
 
     /**
      * 配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
@@ -50,18 +53,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("web-app1")
-                .secret(passwordEncoder.encode("app1-secret-8801"))
-                .authorizedGrantTypes("client_credentials","refresh_token", "authorization_code", "password")
-                .accessTokenValiditySeconds(3600)
-                .scopes("all")
-                .and()
-                .withClient("web-app2")
-                .secret(passwordEncoder.encode("app2-secret-8802"))
-                .authorizedGrantTypes("refresh_token", "authorization_code", "password")
-                .accessTokenValiditySeconds(3600)
-                .scopes("all");
+        clients.withClientDetails(new HappyClientDetailsService(oauthClientDetailsService));
+//        clients.inMemory()
+//                .withClient("web-app1")
+//                .secret(passwordEncoder.encode("app1-secret-8801"))
+//                .authorizedGrantTypes("client_credentials","refresh_token", "authorization_code", "password")
+//                .accessTokenValiditySeconds(3600)
+//                .scopes("all")
+//                .and()
+//                .withClient("web-app2")
+//                .secret(passwordEncoder.encode("app2-secret-8802"))
+//                .authorizedGrantTypes("refresh_token", "authorization_code", "password")
+//                .accessTokenValiditySeconds(3600)
+//                .scopes("all");
     }
 
     /**

@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import cool.happycoding.code.mybatis.base.BaseEntity;
 import cool.happycoding.uaa.client.HappyClientDetails;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.oauth2.provider.ClientDetails;
 
 /**
  * <p>
@@ -15,6 +19,9 @@ import lombok.Data;
  * @since 2021-06-11
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("oauth_client_details")
 public class OauthClientDetails extends BaseEntity {
 
@@ -74,7 +81,7 @@ public class OauthClientDetails extends BaseEntity {
     private Integer refreshTokenValidity;
 
     /**
-     * {}
+     * json 格式：{}
      */
     @TableField("additional_information")
     private String additionalInformation;
