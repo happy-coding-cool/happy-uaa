@@ -41,7 +41,7 @@ public class OauthClientDetailsController {
 
     @ApiOperation(value = "新增应用信息", notes = "新增应用信息")
     @PostMapping
-    public BaseResult<OauthClientDetailsDto> add(@RequestBody OauthClientDetailsAddForm oauthClientDetailsAddForm) {
+    public BaseResult<OauthClientDetailsDto> add(@RequestBody @Validated OauthClientDetailsAddForm oauthClientDetailsAddForm) {
        return BaseResult.success(oauthClientDetailsServiceImpl.save(oauthClientDetailsAddForm));
     }
 

@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 应用信息 新增
@@ -21,9 +23,11 @@ public class OauthClientDetailsAddForm extends BaseForm {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "应用标识")
+    @NotBlank
     private String clientId;
 
     @ApiModelProperty(value = "应用密钥")
+    @NotBlank
     private String clientSecret;
 
     @ApiModelProperty(value = "资源标识")

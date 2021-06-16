@@ -12,6 +12,8 @@ import cool.happycoding.uaa.client.dto.form.OauthClientDetailsQryForm;
 import cool.happycoding.uaa.client.dto.form.OauthClientDetailsQryPageForm;
 import cool.happycoding.uaa.client.dto.form.OauthClientDetailsUpdateForm;
 import cool.happycoding.uaa.client.dto.OauthClientDetailsDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -29,8 +31,10 @@ import java.util.List;
  * @since 2021-06-11
  */
 @Service
+@RequiredArgsConstructor
 public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsMapper, OauthClientDetails> implements IOauthClientDetailsService {
 
+    private final PasswordEncoder passwordEncoder;
 
      @Override
      public OauthClientDetailsDto get(String id) {
@@ -54,6 +58,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
      @Transactional(rollbackFor = Exception.class)
      public OauthClientDetailsDto save(OauthClientDetailsAddForm oauthClientDetailsAddForm) {
         OauthClientDetails oauthClientDetails = oauthClientDetailsAddForm.toEntity(OauthClientDetails.class);
+        oauthClientDetails.setClientSecret(passwordEncoder.encode(oauthClientDetails.getClientSecret()));
         this.save(oauthClientDetails);
         return oauthClientDetails.toDTO(OauthClientDetailsDto.class);
      }

@@ -53,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(new HappyClientDetailsService(oauthClientDetailsService));
+        clients.withClientDetails(new HappyClientDetailsService(oauthClientDetailsService, passwordEncoder));
 //        clients.inMemory()
 //                .withClient("web-app1")
 //                .secret(passwordEncoder.encode("app1-secret-8801"))

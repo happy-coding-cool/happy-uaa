@@ -1,9 +1,8 @@
 ## 项目简介
-    维护项目的作者信息
-    用一两句话简单描述该项目所实现的业务功能；
+    happy-uaa 用户账号认证中心(User Account Authorization)
 
 ## 接口文档
-    http://localhost:port/doc.html
+    http://localhost:port/doc.html   
 
 ## 技术选型
     列出项目的技术栈，包括语言、框架和中间件等；

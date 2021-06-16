@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.google.common.collect.Lists;
 import cool.happycoding.uaa.client.dao.entity.OauthClientDetails;
 import cool.happycoding.uaa.client.service.IOauthClientDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.*;
 
 import java.util.List;
@@ -16,13 +17,15 @@ import java.util.stream.Collectors;
  *
  * @author pengzhenchen 2021/06/11 5:52 下午
  */
-
+@SuppressWarnings("all")
 public class HappyClientDetailsService implements ClientDetailsService, ClientRegistrationService {
 
     private final IOauthClientDetailsService oauthClientDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
-    public HappyClientDetailsService(IOauthClientDetailsService oauthClientDetailsService) {
+    public HappyClientDetailsService(IOauthClientDetailsService oauthClientDetailsService, PasswordEncoder passwordEncoder) {
         this.oauthClientDetailsService = oauthClientDetailsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -33,7 +36,9 @@ public class HappyClientDetailsService implements ClientDetailsService, ClientRe
 
     @Override
     public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
-        oauthClientDetailsService.save(HappyClientDetails.of(clientDetails));
+        OauthClientDetails oauthClientDetails = HappyClientDetails.of(clientDetails);
+        oauthClientDetails.setClientSecret(passwordEncoder.encode(oauthClientDetails.getClientSecret()));
+        oauthClientDetailsService.save(oauthClientDetails);
     }
 
     @Override
