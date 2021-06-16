@@ -12,7 +12,11 @@ public enum HappyAuthStatus implements ResultCode {
     /**
      * There is no client authentication. Try adding an appropriate authentication filter.
      */
-    INSUFFICIENT_ERROR("","It is no client authentication");
+    INSUFFICIENT_ERROR("insufficient-error","It is no client authentication"),
+    /**
+     * 账号或密码错误
+     */
+    BAD_CREDENTIALS("BAD-CREDENTIALS","用户名或密码错误");
 
     String code;
     String message;
