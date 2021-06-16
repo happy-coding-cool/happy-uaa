@@ -54,18 +54,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(new HappyClientDetailsService(oauthClientDetailsService, passwordEncoder));
-//        clients.inMemory()
-//                .withClient("web-app1")
-//                .secret(passwordEncoder.encode("app1-secret-8801"))
-//                .authorizedGrantTypes("client_credentials","refresh_token", "authorization_code", "password")
-//                .accessTokenValiditySeconds(3600)
-//                .scopes("all")
-//                .and()
-//                .withClient("web-app2")
-//                .secret(passwordEncoder.encode("app2-secret-8802"))
-//                .authorizedGrantTypes("refresh_token", "authorization_code", "password")
-//                .accessTokenValiditySeconds(3600)
-//                .scopes("all");
     }
 
     /**
