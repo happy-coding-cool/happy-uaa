@@ -1,8 +1,6 @@
 package cool.happycoding.uaa.config;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.alibaba.fastjson.JSONObject;
 import cool.happycoding.code.base.result.Result;
 import cool.happycoding.code.web.exception.ErrorDetail;
 import lombok.extern.slf4j.Slf4j;
