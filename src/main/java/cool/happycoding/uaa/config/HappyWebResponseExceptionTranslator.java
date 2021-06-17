@@ -1,6 +1,8 @@
 package cool.happycoding.uaa.config;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson.JSONObject;
 import cool.happycoding.code.base.result.Result;
 import cool.happycoding.code.web.exception.ErrorDetail;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,7 @@ public class HappyWebResponseExceptionTranslator extends DefaultWebResponseExcep
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
+
         OAuth2Exception oAuth2Exception;
         if (checkPwd(e)) {
             oAuth2Exception = new InvalidGrantException("用户名或密码错误", e);
@@ -40,6 +43,7 @@ public class HappyWebResponseExceptionTranslator extends DefaultWebResponseExcep
         } else {
             oAuth2Exception = new UnsupportedResponseTypeException("服务内部错误", e);
         }
+        log.debug("认证失败", oAuth2Exception);
         ResponseEntity<OAuth2Exception> response = super.translate(oAuth2Exception);
         String path = null;
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
