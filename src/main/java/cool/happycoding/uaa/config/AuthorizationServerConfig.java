@@ -2,6 +2,7 @@ package cool.happycoding.uaa.config;
 
 import cool.happycoding.uaa.client.HappyClientDetailsService;
 import cool.happycoding.uaa.client.service.IOauthClientDetailsService;
+import cool.happycoding.uaa.filter.HappyClientCredentialsTokenEndpointFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +15,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * description
@@ -28,18 +31,18 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @AutoConfigureAfter(AuthorizationServerEndpointsConfigurer.class)
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    /**
-     * 注入authenticationManager 来支持 password grant type
-     */
-    private final AuthenticationManager authenticationManager;
     private final TokenStore tokenStore;
+
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     private final IOauthClientDetailsService oauthClientDetailsService;
     private final WebResponseExceptionTranslator<OAuth2Exception> webResponseExceptionTranslator;
 
     /**
      * 配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
+     * 注入authenticationManager 来支持 password grant type
      * @param endpoints
      */
     @Override
@@ -67,10 +70,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
+        // 让/oauth/token支持client_id以及client_secret作登录认证,同时自定义异常格式，重写ClientCredentialsTokenEndpointFilter
+        ClientCredentialsTokenEndpointFilter clientCredentialsTokenEndpointFilter
+                =  new HappyClientCredentialsTokenEndpointFilter(security, authenticationEntryPoint);
+        clientCredentialsTokenEndpointFilter.setAuthenticationEntryPoint(authenticationEntryPoint);
+        clientCredentialsTokenEndpointFilter.afterPropertiesSet();
+        security.addTokenEndpointAuthenticationFilter(clientCredentialsTokenEndpointFilter);
         security
                 .tokenKeyAccess("isAuthenticated()")
                 .checkTokenAccess("permitAll()")
-                //让/oauth/token支持client_id以及client_secret作登录认证
-                .allowFormAuthenticationForClients();
+                .authenticationEntryPoint(authenticationEntryPoint)
+        ;
     }
+
+
 }
